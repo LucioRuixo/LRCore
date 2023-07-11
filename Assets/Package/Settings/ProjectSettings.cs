@@ -17,12 +17,12 @@ namespace LRCore.Settings
             {
                 try
                 {
-                    if (!ValidateAssetExtension(path)) throw new IOException($"File extension is not valid (should be {assetFileExtension}).");
+                    if (!ValidateAssetExtension(path)) throw new IOException($"Cannot set property \"{propertyID}\" in path \"{path}\": file extension is not valid (should be {assetFileExtension}).");
 
                     List<string> lines = new List<string>(File.ReadAllLines(path));
 
                     int lineIndex = lines.FindIndex(targetLine => targetLine.Contains(propertyID));
-                    if (lineIndex == -1) throw new Exception("Target property line was not found.");
+                    if (lineIndex == -1) throw new IOException($"Cannot set property \"{propertyID}\" in path \"{path}\": property was not found.");
                     string line = lines[lineIndex];
 
                     int idIndex = line.IndexOf(propertyID);

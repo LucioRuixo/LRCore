@@ -13,10 +13,10 @@ namespace LRCore
 
         private void OnGUI()
         {
-            string version = "1.0.0";
+            string latestVersion = "1.0.0";
             // TODO: auto-detectar versión
 
-            GUILayout.Label($"Creating new version: {version}", EditorStyles.boldLabel);
+            GUILayout.Label($"Latest release version: {latestVersion}", EditorStyles.boldLabel);
         }
     }
 }

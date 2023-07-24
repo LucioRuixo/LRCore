@@ -6,7 +6,7 @@ namespace LRCore.Utils
 {
     public static class FileParser
     {
-        private static readonly string[] validExtensions = new string[]
+        private static readonly HashSet<Type> where Type : Extension validExtensions = new string[]
         {
             ".txt",
             ".asset"

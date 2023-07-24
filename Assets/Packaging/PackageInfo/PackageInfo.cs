@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace LRCore
+namespace LRCore.Packaging
 {
     [CreateAssetMenu(fileName = "Package Info", menuName = "Package Info")]
     public class PackageInfo : ScriptableObject

@@ -9,7 +9,7 @@ namespace LRCore.Packaging
     public static class PackagingUtils
     {
         public const string ReleaseHistoryFileName = "ReleaseHistory";
-        public const string ReleaseHistoryFileName = "ReleaseHistory";
+        public const Extension ReleaseHistoryFileExtension = ;
 
         public static bool GetLatestValidVersion(out VersionNumber version, out VersionNumber[] invalidVersions)
         {

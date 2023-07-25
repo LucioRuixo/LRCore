@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92feaed8644d62b45a6c2a35de8a1fe0, type: 3}
-  m_Name: Package Info
+  m_Name: PackageInfo
   m_EditorClassIdentifier: 
   packageName: com.lr.core
   description: Lucio Ruixo Core

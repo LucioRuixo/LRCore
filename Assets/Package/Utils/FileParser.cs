@@ -8,10 +8,10 @@ namespace LRCore.Utils
 
     public static class FileParser
     {
-        private static readonly HashSet<Type> validExtensions = new HashSet<Type>
+        private static readonly HashSet<Extension> validExtensions = new HashSet<Extension>
         {
-            typeof(Asset),
-            typeof(Text)
+            LRCore.Exts.Asset,
+            LRCore.Exts.Text
         };
 
         private static bool ValidateExtension(string extension)

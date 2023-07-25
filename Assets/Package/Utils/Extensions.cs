@@ -1,53 +1,46 @@
-using System.Collections.Generic;
-
-namespace LRCore.Utils
+namespace LRCore.Utils.Extensions
 {
-    public static class Extensions
+    public abstract class Extension
     {
-        #region Enumerators
-        public enum Exts
-        {
-            Asset,
-            Data,
-            JSON,
-            Text,
-            XML
-        }
-        #endregion
+        public abstract string Ext { get; }
 
-        public static Dictionary<Exts, string> exts = new Dictionary<Exts, string>
-        {
-            [Exts.Asset, ".asset"],
-        }
+        public abstract bool HasExtension(string path);
     }
 
-    public static class Asset
+    #region Extensions
+    public class Asset : Extension
     {
-		public const string Extension = ".asset";
-        public static bool HasExtension(string path) => path.EndsWith(Extension);
+		public override string Ext { get; } = ".asset";
+
+        public override bool HasExtension(string path) => path.EndsWith(Ext);
     }
 
-    public static class Data
+    public class Data : Extension
     {
-        public const string Extension = ".dat";
-        public static bool HasExtension(string path) => path.EndsWith(Extension);
+        public override string Ext { get; } = ".dat";
+
+        public override bool HasExtension(string path) => path.EndsWith(Ext);
     }
 
-    public static class JSON
+    public class JSON : Extension
     {
-        public const string Extension = ".json";
-        public static bool HasExtension(string path) => path.EndsWith(Extension);
+        public override string Ext { get; } = ".json";
+
+        public override bool HasExtension(string path) => path.EndsWith(Ext);
     }
 
-    public static class Text
+    public class Text : Extension
     {
-        public const string Extension = ".txt";
-        public static bool HasExtension(string path) => path.EndsWith(Extension);
+        public override string Ext { get; } = ".txt";
+
+        public override bool HasExtension(string path) => path.EndsWith(Ext);
     }
 
-    public static class XML
+    public class XML : Extension
     {
-        public const string Extension = ".xml";¿
-        public static bool HasExtension(string path) => path.EndsWith(Extension);
+        public override string Ext { get; } = ".xml";
+
+        public override bool HasExtension(string path) => path.EndsWith(Ext);
     }
+    #endregion
 }

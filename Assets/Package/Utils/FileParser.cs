@@ -4,6 +4,8 @@ using System.IO;
 
 namespace LRCore.Utils
 {
+    using Extensions;
+
     public static class FileParser
     {
         private static readonly HashSet<Type> validExtensions = new HashSet<Type>
@@ -14,7 +16,7 @@ namespace LRCore.Utils
 
         private static bool ValidateExtension(string extension)
         {
-            foreach (string validExtension in validExtensions)
+            foreach (var validExtension in validExtensions)
             {
                 if (extension.EndsWith(validExtension)) return true;
             }

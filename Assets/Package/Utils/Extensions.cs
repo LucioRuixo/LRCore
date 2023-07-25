@@ -1,26 +1,53 @@
+using System.Collections.Generic;
+
 namespace LRCore.Utils
 {
     public static class Extensions
     {
-        public Asset Asset = new Asset();
+        #region Enumerators
+        public enum Exts
+        {
+            Asset,
+            Data,
+            JSON,
+            Text,
+            XML
+        }
+        #endregion
+
+        public static Dictionary<Exts, string> exts = new Dictionary<Exts, string>
+        {
+            [Exts.Asset, ".asset"],
+        }
     }
 
-    #region Extensions
-    public abstract class Extension
+    public static class Asset
     {
-        public abstract override string ToString();
-
-        public bool HasExtension(string path) => path.EndsWith(ToString());
+		public const string Extension = ".asset";
+        public static bool HasExtension(string path) => path.EndsWith(Extension);
     }
 
-    public class Asset : Extension
+    public static class Data
     {
-        public override string ToString() => ".asset";
+        public const string Extension = ".dat";
+        public static bool HasExtension(string path) => path.EndsWith(Extension);
     }
 
-    public class Text : Extension
+    public static class JSON
     {
-        public override string ToString() => ".txt";
+        public const string Extension = ".json";
+        public static bool HasExtension(string path) => path.EndsWith(Extension);
     }
-    #endregion
+
+    public static class Text
+    {
+        public const string Extension = ".txt";
+        public static bool HasExtension(string path) => path.EndsWith(Extension);
+    }
+
+    public static class XML
+    {
+        public const string Extension = ".xml";¿
+        public static bool HasExtension(string path) => path.EndsWith(Extension);
+    }
 }

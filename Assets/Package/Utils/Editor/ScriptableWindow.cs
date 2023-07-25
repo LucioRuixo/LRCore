@@ -15,7 +15,7 @@ namespace LRCore
 
         private List<ScriptableObject> TargetObjects { get; set; } = new List<ScriptableObject>();
 
-        public static void OpenWindow(ScriptableObject so)
+        public static void Open(ScriptableObject so)
         {
             // ScriptableWindow window = CreateInstance(typeof(ScriptableWindow)) as ScriptableWindow;
             // if(window == null) return;
@@ -23,7 +23,7 @@ namespace LRCore
             // window.ShowUtility();
 
             ScriptableWindow window = (ScriptableWindow)GetWindow(typeof(ScriptableWindow), false);
-            if (window == null) return;
+            if (!window) return;
             window.SetTargetObject(so);
         }
 
@@ -59,7 +59,7 @@ namespace LRCore
                 {
                     if (GUILayout.Button(targetObj.name, GUILayout.Width(targetObj.name.Length * 9.0f)))
                     {
-                        OpenWindow(targetObj);
+                        Open(targetObj);
                         return;
                     }
                 }
@@ -78,17 +78,14 @@ namespace LRCore
     [CustomPropertyDrawer(typeof(ScriptableObject), true)]
     public class CustomScriptableObjectDrawer : PropertyDrawer
     {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return 0.0f;
-        }
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => 0.0f;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.PropertyField(property, label, true);
-            if (GUILayout.Button("VER", GUILayout.Width(40))) ScriptableWindow.OpenWindow((ScriptableObject)property.objectReferenceValue);
+            if (GUILayout.Button("VER", GUILayout.Width(40))) ScriptableWindow.Open((ScriptableObject)property.objectReferenceValue);
 
             GUILayout.EndHorizontal();
         }

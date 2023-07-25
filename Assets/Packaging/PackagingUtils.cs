@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 namespace LRCore.Packaging
 {
@@ -9,16 +8,15 @@ namespace LRCore.Packaging
     public static class PackagingUtils
     {
         public const string ReleaseHistoryFileName = "ReleaseHistory";
-        public const Extension ReleaseHistoryFileExtension = ;
 
         public static bool GetLatestValidVersion(out VersionNumber version, out VersionNumber[] invalidVersions)
         {
-            if (!File.Exists($"{Paths.projectFolder}/{ReleaseHistoryFileName}"))
+            if (!File.Exists($"{Paths.projectFolder}/{ReleaseHistoryFileName}.json"))
             {
                 version = null;
                 invalidVersions = null;
 
-                Logger.LogError(typeof(PackagingUtils), "Failed to get latest valid package version: ReleaseHistory.dat");
+                Logger.LogError(typeof(PackagingUtils), $"Failed to get latest valid package version: {ReleaseHistoryFileName}.json");
                 return false;
             }
 

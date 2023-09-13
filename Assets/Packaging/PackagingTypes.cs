@@ -153,8 +153,7 @@ namespace LRCore.Packaging
             object bObject = b;
 
             if (aObject == null && bObject == null) return true;
-            else if (aObject == null) return false;
-            else if (bObject == null) return false;
+            else if (aObject == null || bObject == null) return false;
 
             return a.major == b.major && a.minor == b.minor && a.patch == b.patch;
         }

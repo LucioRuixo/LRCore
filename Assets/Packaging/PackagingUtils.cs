@@ -11,11 +11,11 @@ namespace LRCore.Packaging
 
         public static bool GetLatestValidVersion(out VersionNumber version, out VersionNumber[] invalidVersions)
         {
+            version = null;
+            invalidVersions = null;
+
             if (!File.Exists($"{Paths.projectFolder}/{ReleaseHistoryFileName}.json"))
             {
-                version = null;
-                invalidVersions = null;
-
                 Logger.LogError(typeof(PackagingUtils), $"Failed to get latest valid package version: {ReleaseHistoryFileName}.json");
                 return false;
             }
@@ -32,6 +32,8 @@ namespace LRCore.Packaging
 
                 throw;
             }
+
+            return false;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace LRCore
     {
         // TODO: estudiar esta clase
 
+        public virtual string Title { get; }
+
         private ScriptableObject TargetObject { get; set; }
         private Editor CustomEditor { get; set; }
 
@@ -15,7 +17,7 @@ namespace LRCore
 
         private List<ScriptableObject> TargetObjects { get; set; } = new List<ScriptableObject>();
 
-        public static void Open(ScriptableObject so)
+        public static void Open(ScriptableObject scriptableObject)
         {
             // ScriptableWindow window = CreateInstance(typeof(ScriptableWindow)) as ScriptableWindow;
             // if(window == null) return;
@@ -24,7 +26,10 @@ namespace LRCore
 
             ScriptableWindow window = (ScriptableWindow)GetWindow(typeof(ScriptableWindow), false);
             if (!window) return;
-            window.SetTargetObject(so);
+
+            // TODO: que el título de la ventana sea Title (ahora no funciona)
+            window.titleContent.text = window.Title;
+            window.SetTargetObject(scriptableObject);
         }
 
         private void SetTargetObject(ScriptableObject targetObject)

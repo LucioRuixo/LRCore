@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace LRCore.Utils
 {
@@ -14,15 +15,7 @@ namespace LRCore.Utils
             LRCore.Exts.Text
         };
 
-        private static bool ValidateExtension(string extension)
-        {
-            foreach (var validExtension in validExtensions)
-            {
-                if (extension.EndsWith(validExtension)) return true;
-            }
-
-            return false;
-        }
+        private static bool ValidateExtension(string extension) => validExtensions.Any((validExtension) => extension.EndsWith(validExtension));
 
 	    public static string[] ParseFile(string path)
         {

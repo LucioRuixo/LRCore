@@ -4,6 +4,11 @@ namespace LRCore.Packaging
 {
     public class PackageInfo : ScriptableObject
     {
+        #region Constants
+        public const string AssetName = "PackageInfo";
+        public const string AssetPath = AssetName;
+        #endregion
+
         [Header("Required properties")]
         [SerializeField] private string packageName;
         public string PackageName => packageName;

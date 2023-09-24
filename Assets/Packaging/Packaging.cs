@@ -16,18 +16,5 @@ namespace LRCore.Packaging
                 return packageInfo;
             }
         }
-
-        public static ReleaseHistory ReleaseHistory
-        {
-            get
-            {
-                string path = ReleaseHistory.AssetPath;
-                ReleaseHistory releaseHistory = Resources.Load<ReleaseHistory>(path);
-
-                if (!releaseHistory) Logger.LogError(typeof(Packaging), $"Release history load failed: could not load asset from path \"{path}\".");
-
-                return releaseHistory;
-            }
-        }
     }
 }

@@ -4,7 +4,7 @@ namespace LRCore.Packaging
 {
     public class VersioningTool
     {
-		public static bool CreateNewRelease(ReleaseHistory releaseHistory, VersionNumber versionNumber)
+		public static bool CreateNewRelease(VersionNumber versionNumber)
         {
             Release release = new($"v{versionNumber}");
 
@@ -14,7 +14,7 @@ namespace LRCore.Packaging
                 {
                     Directory.CreateDirectory(release.BuildPath);
 
-                    if (releaseHistory.AddNewRelease(versionNumber, release))
+                    if (ReleaseHistory.AddNewRelease(versionNumber, release))
                     {
                         Logger.Log(typeof(VersioningTool), $"New version {versionNumber} release successfully created in path \"{release.BuildPath}\"!");
                         return true;
@@ -23,7 +23,7 @@ namespace LRCore.Packaging
                     {
                         Directory.Delete(release.BuildPath);
 
-                        Logger.LogError(typeof(VersioningTool), "Can not create new release: release could not be added to release history.");
+                        Logger.LogError(typeof(VersioningTool), "Could not create new release: release could not be added to release history.");
                         return false;
                     }
                 }
@@ -34,7 +34,7 @@ namespace LRCore.Packaging
             }
             else
             {
-                Logger.LogError(typeof(VersioningTool), $"Can not create new release: directory with path \"{release.BuildPath}\" already exists.");
+                Logger.LogError(typeof(VersioningTool), $"Could not create new release: directory with path \"{release.BuildPath}\" already exists.");
                 return false;
             }
         }

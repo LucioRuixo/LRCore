@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace LRCore.Utils
+namespace LRCore.Utils.IO
 {
     using Extensions;
 
     public static class FileParser
     {
-        private static readonly HashSet<Extension> validExtensions = new HashSet<Extension>
+        private static readonly HashSet<ExtTypes> validExtensions = new HashSet<ExtTypes>
         {
-            LRCore.Exts.Asset,
-            LRCore.Exts.Text
+            ExtTypes.Asset,
+            ExtTypes.Text
         };
 
-        private static bool ValidateExtension(string extension) => validExtensions.Any((validExtension) => extension.EndsWith(validExtension));
+        private static bool ValidateExtension(string extension) => validExtensions.Any((validExtension) => extension.EndsWith(Extension.ValidExts[validExtension].Ext));
 
 	    public static string[] ParseFile(string path)
         {

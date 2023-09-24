@@ -11,7 +11,6 @@ namespace LRCore.Packaging
         #endregion
 
         private static PackageInfo packageInfo;
-        private static ReleaseHistory releaseHistory;
 
         private static VersionNumber latestVersion;
         private static VersionNumber nextVersion;
@@ -26,19 +25,17 @@ namespace LRCore.Packaging
         private static void Refresh()
         {
             packageInfo = Packaging.PackageInfo;
-            releaseHistory = Packaging.ReleaseHistory;
 
-            latestVersion = !releaseHistory.IsEmpty ? releaseHistory.LatestVersion : new();
+            latestVersion = !ReleaseHistory.IsEmpty ? ReleaseHistory.LatestVersion : new();
             nextVersion = latestVersion + 1;
         }
 
         private void OnGUI()
         {
             // ----- GUI -----
-
             EditorGUILayout.Space();
 
-            string latestReleaseText = releaseHistory.IsEmpty ? "No releases available" : $"Latest release version: {latestVersion}";
+            string latestReleaseText = ReleaseHistory.IsEmpty ? "No releases available" : $"Latest release version: {latestVersion}";
             GUILayout.Label(latestReleaseText, EditorStyles.boldLabel);
 
             string nextReleaseText = $"Next release version: {nextVersion}";
@@ -48,7 +45,7 @@ namespace LRCore.Packaging
 
             if (GUILayout.Button($"Create release v{nextVersion}"))
             {
-                if (VersioningTool.CreateNewRelease(releaseHistory, nextVersion)) Refresh();
+                if (VersioningTool.CreateNewRelease(nextVersion)) Refresh();
             }
         }
     }

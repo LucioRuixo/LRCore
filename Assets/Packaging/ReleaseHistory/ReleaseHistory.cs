@@ -1,40 +1,85 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using UnityEngine;
 
 namespace LRCore.Packaging
 {
-    public class ReleaseHistory : ScriptableObject
+    using History = SortedDictionary<VersionNumber, Release>;
+
+    using Utils.Extensions;
+    using Utils.IO;
+    using Utils;
+
+    public static class ReleaseHistory
     {
         #region Constants
-        public const string AssetName = "ReleaseHistory";
-        public const string AssetPath = AssetName;
+        public const string HistoryFileName = "ReleaseHistory";
+        public const ExtTypes HistoryFileExt = ExtTypes.JSON;
         #endregion
 
-        public SortedDictionary<VersionNumber, Release> History { get; private set; } = new();
+        private static readonly string historyFilePath = $"{Paths.projectFolder}/{HistoryFileName}{Extension.ValidExts[HistoryFileExt].Ext}";
 
-        public bool IsEmpty => History.Count == 0;
+        private static History history;
+        public static History History
+        {
+            get
+            {
+                if (history == null) LoadHistory();
+                return history;
+            }
 
-        public VersionNumber LatestVersion => History != null && !IsEmpty ? History.Last().Key : null;
-        public Release LatestRelease => History != null && !IsEmpty ? History.Last().Value : null;
+            private set => history = value;
+        }
 
-        public bool AddNewRelease(VersionNumber versionNumber, Release release)
+        public static bool IsEmpty => History.Count == 0;
+
+        public static VersionNumber LatestVersion => History != null && !IsEmpty ? History.Last().Key : null;
+        public static Release LatestRelease => History != null && !IsEmpty ? History.Last().Value : null;
+
+        public static bool AddNewRelease(VersionNumber versionNumber, Release release)
         {
             if (versionNumber == VersionNumber.Zero)
             {
-                Logger.LogError(typeof(ReleaseHistory), $"Can not add new release: version number must be higher than 0.0.0.");
+                Logger.LogError(typeof(ReleaseHistory), "Could not add new release: version number must be higher than 0.0.0.");
                 return false;
             }
             else if (!IsEmpty && versionNumber <= LatestVersion)
             {
-                Logger.LogError(typeof(ReleaseHistory), $"Can not add new release: version number {versionNumber} is not higher than last release's.");
+                Logger.LogError(typeof(ReleaseHistory), $"Could Can not add new release: version number {versionNumber} is not higher than last release's.");
                 return false;
             }
 
-            History.Add(versionNumber, release);
+            history.Add(versionNumber, release);
+            SaveHistory();
+
             return true;
         }
 
-        public void Clear() => History.Clear();
+        public static void Clear()
+        {
+            history.Clear();
+            SaveHistory();
+        }
+
+        private static void SaveHistory() => Serializer.Serialize(historyFilePath, history);
+
+        private static void LoadHistory()
+        {
+            try
+            {
+                if (File.Exists(historyFilePath)) history = Serializer.Deserialize<History>(historyFilePath);
+                else
+                {
+                    history = new();
+                    SaveHistory();
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger.LogError(typeof(ReleaseHistory), $"Could not load release history from \"{historyFilePath}\": {exception.Message}");
+                throw;
+            }
+        }
     }
 }

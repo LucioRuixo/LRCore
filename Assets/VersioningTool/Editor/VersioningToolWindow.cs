@@ -12,6 +12,8 @@ namespace LRCore.Packaging
 
         private static PackageInfo packageInfo;
 
+        private static bool releaseHistoryIsEmpty;
+
         private static VersionNumber latestVersion;
         private static VersionNumber nextVersion;
 
@@ -26,7 +28,9 @@ namespace LRCore.Packaging
         {
             packageInfo = Packaging.PackageInfo;
 
-            latestVersion = !ReleaseHistory.IsEmpty ? ReleaseHistory.LatestVersion : new();
+            releaseHistoryIsEmpty = ReleaseHistory.IsEmpty;
+
+            latestVersion = !releaseHistoryIsEmpty ? ReleaseHistory.LatestVersion : new();
             nextVersion = latestVersion + 1;
         }
 
@@ -35,7 +39,7 @@ namespace LRCore.Packaging
             // ----- GUI -----
             EditorGUILayout.Space();
 
-            string latestReleaseText = ReleaseHistory.IsEmpty ? "No releases available" : $"Latest release version: {latestVersion}";
+            string latestReleaseText = releaseHistoryIsEmpty ? "No releases available" : $"Latest release version: {latestVersion}";
             GUILayout.Label(latestReleaseText, EditorStyles.boldLabel);
 
             string nextReleaseText = $"Next release version: {nextVersion}";

@@ -214,8 +214,9 @@ namespace LRCore.Packaging
         public string BuildPath { get; private set; }
 
         /// <summary>
-        /// <param name="buildPath">Path inside Builds/ that leads to the contents of the release.</param>
+        /// <b>buildPath</b>: <param name="buildPath">Path that leads to the contents of the release.</param><br/>
+        /// <b>placeInBuildsFolder</b>: <param name="placeInBuildsFolder">Whether the passed path should additionally be placed inside the default builds folder.</param>
         /// </summary>
-        public Release(string buildPath) => BuildPath = $"{Paths.buildsFolder}/{buildPath}";
+        public Release(string buildPath, bool placeInBuildsFolder = true) => BuildPath = $"{(placeInBuildsFolder ? $"{Paths.buildsFolder}/" : "")}{buildPath}";
     }
 }

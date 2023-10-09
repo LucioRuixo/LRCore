@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace LRCore.Packaging
+namespace LRCore.Packaging.Editor
 {
     public class VersioningToolWindow : EditorWindow
     {
@@ -10,7 +10,7 @@ namespace LRCore.Packaging
         private const string Shortcut_Open = "#&v";
         #endregion
 
-        private static PackageInfo packageInfo;
+        private static PackageManifestInfo packageInfo;
 
         private static bool releaseHistoryIsEmpty;
 
@@ -36,7 +36,6 @@ namespace LRCore.Packaging
 
         private void OnGUI()
         {
-            // ----- GUI -----
             EditorGUILayout.Space();
 
             string latestReleaseText = releaseHistoryIsEmpty ? "No releases available" : $"Latest release version: {latestVersion}";

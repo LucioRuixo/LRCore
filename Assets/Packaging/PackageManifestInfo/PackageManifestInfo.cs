@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace LRCore.Packaging
 {
-    public class PackageInfo : ScriptableObject
+    public sealed class PackageManifestInfo : ScriptableObject
     {
         #region Constants
-        public const string AssetName = "PackageInfo";
+        public const string AssetName = "PackageManifestInfo";
         public const string AssetPath = AssetName;
         #endregion
 

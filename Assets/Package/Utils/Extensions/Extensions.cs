@@ -102,7 +102,7 @@ namespace LRCore.Utils.Extensions
         public override ExtTypes ExtType => ExtTypes.JSON;
         public override string Ext => ".json";
 
-        public override void Serialize<T>(string path, T value) => FileWriter.Write(path, JsonConvert.SerializeObject(value));
+        public override void Serialize<T>(string path, T value) => FileWriter.Write(path, JsonConvert.SerializeObject(value, Formatting.Indented));
 
         public override T Deserialize<T>(string path)
         {

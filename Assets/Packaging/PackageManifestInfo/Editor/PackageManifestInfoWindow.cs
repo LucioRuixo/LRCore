@@ -41,7 +41,7 @@ namespace LRCore.Packaging.Editor
             if (GUILayout.Button($"Serialize manifest"))
             {
                 PackageManifestInfo manifestAsset = (PackageManifestInfo)Resources.Load(PackageManifestInfo.AssetName);
-                string manifestPath = $"{Paths.packagesFolder}/{manifestAsset.PackageName}/{PackagingUtils.ManifestFileName}";
+                string manifestPath = $"{Paths.packagesFolder}/{manifestAsset.PackageName}/{PackagingUtils.PackageManifestFileName}";
 
                 ((SerializableExtension)Extension.ValidExts[ExtTypes.JSON]).Serialize(manifestPath, manifestAsset);
             }

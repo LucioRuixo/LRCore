@@ -8,7 +8,7 @@ namespace LRCore.Packaging
     public static class PackagingUtils
     {
         #region Constants
-        public const string ManifestFileName = "manifest.json";
+        public const string PackageManifestFileName = "package.json";
         public const string ReleaseHistoryFileName = "ReleaseHistory";
         #endregion
 

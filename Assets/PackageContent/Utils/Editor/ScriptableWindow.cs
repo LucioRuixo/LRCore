@@ -32,50 +32,55 @@ namespace LRCore
             window.SetTargetObject(scriptableObject);
         }
 
-        private void SetTargetObject(ScriptableObject targetObject)
-        {
-            TargetObject = targetObject;
-            CustomEditor = Editor.CreateEditor(targetObject);
-            titleContent = new GUIContent(targetObject.name);
-
-            // Keep a record of the setting objects hierarchy
-            int newTargetObjIdx = TargetObjects.IndexOf(targetObject);
-            if (newTargetObjIdx >= 0)
-            {
-                // Showing an object from the hierarchy -> remove all elements in front of it
-                TargetObjects.RemoveRange(newTargetObjIdx + 1, TargetObjects.Count - (newTargetObjIdx + 1));
-            }
-            else
-            {
-                // Showing a new object -> Add it to the list
-                TargetObjects.Add(targetObject);
-            }
-        }
-
-        void OnGUI()
+        protected virtual void OnGUI()
         {
             EditorGUIUtility.labelWidth = 200.0f;
 
             if (CustomEditor)
             {
-                EditorGUILayout.BeginHorizontal();
-
-                foreach (var targetObj in TargetObjects)
-                {
-                    if (GUILayout.Button(targetObj.name, GUILayout.Width(targetObj.name.Length * 9.0f)))
-                    {
-                        Open(targetObj);
-                        return;
-                    }
-                }
-
-                GUILayout.EndHorizontal();
+                DrawObjectHierarchy();
 
                 EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
                 scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
                 CustomEditor.OnInspectorGUI();
                 EditorGUILayout.EndScrollView();
+            }
+        }
+
+        private void DrawObjectHierarchy()
+        {
+            EditorGUILayout.BeginHorizontal();
+
+            foreach (var targetObj in TargetObjects)
+            {
+                if (GUILayout.Button(targetObj.name, GUILayout.Width(targetObj.name.Length * 9.0f)))
+                {
+                    Open(targetObj);
+                    return;
+                }
+            }
+
+            GUILayout.EndHorizontal();
+        }
+
+        protected void SetTargetObject(ScriptableObject targetObject)
+        {
+            TargetObject = targetObject;
+            CustomEditor = Editor.CreateEditor(targetObject);
+            titleContent = new GUIContent(targetObject.name);
+
+            // Keep a record of the setting objects hierarchy
+            int newTargetObjIndex = TargetObjects.IndexOf(targetObject);
+            if (newTargetObjIndex >= 0)
+            {
+                // Showing an object from the hierarchy -> remove all elements in front of it
+                TargetObjects.RemoveRange(newTargetObjIndex + 1, TargetObjects.Count - (newTargetObjIndex + 1));
+            }
+            else
+            {
+                // Showing a new object -> Add it to the list
+                TargetObjects.Add(targetObject);
             }
         }
     }

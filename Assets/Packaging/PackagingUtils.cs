@@ -7,7 +7,10 @@ namespace LRCore.Packaging
 
     public static class PackagingUtils
     {
+        #region Constants
+        public const string ManifestFileName = "manifest.json";
         public const string ReleaseHistoryFileName = "ReleaseHistory";
+        #endregion
 
         public static bool GetLatestValidVersion(out VersionNumber version, out VersionNumber[] invalidVersions)
         {

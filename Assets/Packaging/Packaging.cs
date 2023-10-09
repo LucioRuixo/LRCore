@@ -4,12 +4,12 @@ namespace LRCore.Packaging
 {
     public static class Packaging
     {
-		public static PackageInfo PackageInfo
+		public static PackageManifestInfo PackageInfo
         {
             get
             {
-                string path = PackageInfo.AssetPath;
-                PackageInfo packageInfo = Resources.Load<PackageInfo>(path);
+                string path = PackageManifestInfo.AssetPath;
+                PackageManifestInfo packageInfo = Resources.Load<PackageManifestInfo>(path);
 
                 if (!packageInfo) Logger.LogError(typeof(Packaging), $"Package info load failed: could not load asset from path \"{path}\".");
 

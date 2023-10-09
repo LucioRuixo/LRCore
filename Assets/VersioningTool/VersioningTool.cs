@@ -22,13 +22,7 @@ namespace LRCore.Packaging
                 {
                     string packageContentPath = Paths.packageFolder;
 
-                    Directory.CreateDirectory(buildContentPath);
-
-                    string[] packageDirectories = Directory.GetDirectories(packageContentPath, "*", SearchOption.AllDirectories);
-                    foreach (string directory in packageDirectories) Directory.CreateDirectory(directory.Replace(packageContentPath, buildContentPath));
-
-                    string[] packageFiles = Directory.GetFiles(packageContentPath, "*", SearchOption.AllDirectories);
-                    foreach (string file in packageFiles) File.Copy(file, file.Replace(packageContentPath, buildContentPath), true);
+                    CopyPackageContent(packageContentPath, buildContentPath);
 
                     if (ReleaseHistory.AddNewRelease(versionNumber, release))
                     {
@@ -54,6 +48,17 @@ namespace LRCore.Packaging
                 Logger.LogError(typeof(VersioningTool), $"Could not create new release: directory with path \"{release.BuildPath}\" already exists.");
                 return false;
             }
+        }
+
+        private static void CopyPackageContent(string packageContentPath, string buildContentPath)
+        {
+            Directory.CreateDirectory(buildContentPath);
+
+            string[] packageDirectories = Directory.GetDirectories(packageContentPath, "*", SearchOption.AllDirectories);
+            foreach (string directory in packageDirectories) Directory.CreateDirectory(directory.Replace(packageContentPath, buildContentPath));
+
+            string[] packageFiles = Directory.GetFiles(packageContentPath, "*", SearchOption.AllDirectories);
+            foreach (string file in packageFiles) File.Copy(file, file.Replace(packageContentPath, buildContentPath), true);
         }
     }
 }

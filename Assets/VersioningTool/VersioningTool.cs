@@ -2,17 +2,33 @@ using System.IO;
 
 namespace LRCore.Packaging
 {
+    using Utils;
+
     public class VersioningTool
     {
-		public static bool CreateNewRelease(VersionNumber versionNumber)
+        #region Constants
+        private const string PackageContentFolder = "package";
+        #endregion
+
+        public static bool CreateNewRelease(VersionNumber versionNumber)
         {
             Release release = new($"v{versionNumber}");
 
             if (!Directory.Exists(release.BuildPath))
             {
+                string buildContentPath = $"{release.BuildPath}/{PackageContentFolder}";
+
                 try
                 {
-                    Directory.CreateDirectory(release.BuildPath);
+                    string packageContentPath = Paths.packageFolder;
+
+                    Directory.CreateDirectory(buildContentPath);
+
+                    string[] packageDirectories = Directory.GetDirectories(packageContentPath, "*", SearchOption.AllDirectories);
+                    foreach (string directory in packageDirectories) Directory.CreateDirectory(directory.Replace(packageContentPath, buildContentPath));
+
+                    string[] packageFiles = Directory.GetFiles(packageContentPath, "*", SearchOption.AllDirectories);
+                    foreach (string file in packageFiles) File.Copy(file, file.Replace(packageContentPath, buildContentPath), true);
 
                     if (ReleaseHistory.AddNewRelease(versionNumber, release))
                     {
@@ -29,6 +45,7 @@ namespace LRCore.Packaging
                 }
                 catch (IOException exception)
                 {
+                    if (Directory.Exists(release.BuildPath)) Directory.Delete(release.BuildPath, true);
                     throw new IOException(exception.Message);
                 }
             }

@@ -1,12 +1,19 @@
 using System;
+using System.ComponentModel;
 
 namespace LRCore.Packaging
 {
     using Utils;
+    using Utils.TypeConverters;
 
-    [Serializable]
+    [Serializable, TypeConverter(typeof(VersionNumberTypeConverter))]
     public class VersionNumber : IComparable
     {
+        #region Constants
+        public const char Separator = '.';
+        public const int InternalNumbers = 3;
+        #endregion
+
         private uint major;
         private uint minor;
         private uint patch;

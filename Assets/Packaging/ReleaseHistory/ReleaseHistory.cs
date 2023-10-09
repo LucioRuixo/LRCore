@@ -7,9 +7,9 @@ namespace LRCore.Packaging
 {
     using History = SortedDictionary<VersionNumber, Release>;
 
+    using Utils;
     using Utils.Extensions;
     using Utils.IO;
-    using Utils;
 
     public static class ReleaseHistory
     {
@@ -25,7 +25,7 @@ namespace LRCore.Packaging
         {
             get
             {
-                if (history == null) LoadHistory();
+                LoadHistory();
                 return history;
             }
 

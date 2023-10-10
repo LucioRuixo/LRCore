@@ -1,8 +1,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace LRCore.Packaging.Editor
+namespace LRCore.Editor.Packaging
 {
+    using global::LRCore.Packaging;
     using Utils;
     using Utils.Extensions;
 
@@ -14,6 +15,9 @@ namespace LRCore.Packaging.Editor
         #endregion
 
         public override string Title => MenuTitle;
+
+        private bool releaseHistoryIsEmpty;
+        private string version;
 
         [MenuItem(LRCore.Signature + "/" + MenuTitle + " " + Shortcut_Open)]
         public static void Open()
@@ -30,6 +34,8 @@ namespace LRCore.Packaging.Editor
             // TODO: que el título de la ventana sea Title (ahora no funciona)
             window.titleContent.text = window.Title;
             window.SetTargetObject(scriptableObject);
+
+            window.Refresh();
         }
 
         protected override void OnGUI()
@@ -45,6 +51,12 @@ namespace LRCore.Packaging.Editor
 
                 ((SerializableExtension)Extension.ValidExts[ExtTypes.JSON]).Serialize(manifestPath, manifestAsset);
             }
+        }
+
+        private void Refresh()
+        {
+            releaseHistoryIsEmpty = ReleaseHistory.IsEmpty;
+            version = ReleaseHistory.LatestVersion;
         }
     }
 }

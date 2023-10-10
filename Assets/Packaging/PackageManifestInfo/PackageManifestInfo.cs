@@ -1,4 +1,7 @@
+using System;
 using UnityEngine;
+
+using Newtonsoft.Json;
 
 namespace LRCore.Packaging
 {
@@ -9,54 +12,71 @@ namespace LRCore.Packaging
         public const string AssetPath = AssetName;
         #endregion
 
+        #region Structures
+        [Serializable]
+        public struct AuthorInfo
+        {
+            [SerializeField] private string name;
+            [JsonProperty("name")] public string Name => name;
+
+            [SerializeField] private string email;
+            [JsonProperty("email")] public string Email => email;
+
+            [SerializeField] private string url;
+            [JsonProperty("url")] public string URL => url;
+        }
+        #endregion
+
         [Header("Required properties")]
         [SerializeField] private string packageName;
-        public string PackageName => packageName;
+        [JsonProperty("name")] public string PackageName => packageName;
 
 
         [Header("Recommended properties")]
         [SerializeField] private string description;
-        public string Description => description;
+        [JsonProperty("description")] public string Description => description;
 
         [SerializeField] private string displayName;
-        public string DisplayName => displayName;
+        [JsonProperty("displayName")] public string DisplayName => displayName;
 
         [SerializeField] private string unity;
-        public string Unity => unity;
+        [JsonProperty("unity")] public string Unity => unity;
 
 
         [Header("Optional properties")]
-        [SerializeField] private string author;
-        public string Author => author;
+        [SerializeField] private AuthorInfo author;
+        [JsonProperty("author")] public AuthorInfo Author => author;
 
         [SerializeField] private string changelogURL;
-        public string ChangelogURL => changelogURL;
+        [JsonProperty("changelogUrl")] public string ChangelogURL => changelogURL;
 
-        [SerializeField] private string dependencies;
-        public string Dependencies => dependencies;
+        [SerializeField] private string[] dependencies;
+        [JsonProperty("dependencies")] public string[] Dependencies => dependencies;
 
         [SerializeField] private string documentationURL;
-        public string DocumentationURL => documentationURL;
+        [JsonProperty("documentationUrl")] public string DocumentationURL => documentationURL;
 
-        [SerializeField] private string hideInEditor;
-        public string HideInEditor => hideInEditor;
+        [SerializeField] private bool hideInEditor;
+        [JsonProperty("hideInEditor")] public bool HideInEditor => hideInEditor;
 
-        [SerializeField] private string keywords;
-        public string Keywords => keywords;
+        [SerializeField] private string[] keywords;
+        [JsonProperty("keywords")] public string[] Keywords => keywords;
 
         [SerializeField] private string license;
-        public string License => license;
+        [JsonProperty("license")] public string License => license;
 
         [SerializeField] private string licensesURL;
-        public string LicensesURL => licensesURL;
+        [JsonProperty("licensesUrl")] public string LicensesURL => licensesURL;
 
-        [SerializeField] private string samples;
-        public string Samples => samples;
+        [SerializeField] private object[] samples;
+        [JsonProperty("samples")] public object[] Samples => samples;
 
         [SerializeField] private string type;
-        public string Type => type;
+        [JsonProperty("type")] public string Type => type;
 
         [SerializeField] private string unityRelease;
-        public string UnityRelease => unityRelease;
+        [JsonProperty("unityRelease")] public string UnityRelease => unityRelease;
+
+        [JsonProperty("version")] public string Version { get; set; }
     }
 }

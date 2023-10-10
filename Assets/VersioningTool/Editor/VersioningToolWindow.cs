@@ -1,8 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace LRCore.Packaging.Editor
+namespace LRCore.Editor.Packaging
 {
+    using global::LRCore.Packaging;
+
     public class VersioningToolWindow : EditorWindow
     {
         #region Constants

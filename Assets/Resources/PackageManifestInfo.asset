@@ -15,15 +15,17 @@ MonoBehaviour:
   packageName: com.lr.core
   description: Lucio Ruixo Core
   displayName: LR Core
-  unity: 
-  author: Lucio Ruixo
-  changelogURL: 
-  dependencies: 
-  documentationURL: 
-  hideInEditor: 
-  keywords: 
+  unity: 2022.3
+  author:
+    name: Lucio Ruixo
+    email: lucioruixo@gmail.com
+    url: https://github.com/LucioRuixo
+  changelogURL: https://github.com/LucioRuixo/LRCore
+  dependencies: []
+  documentationURL: https://github.com/LucioRuixo/LRCore
+  hideInEditor: 0
+  keywords: []
   license: 
   licensesURL: 
-  samples: 
   type: 
-  unityRelease: 
+  unityRelease: 4f1

@@ -7,7 +7,7 @@ namespace LRCore.Packaging
     public class VersioningTool
     {
         #region Constants
-        private const string PackageContentFolder = "package";
+        public const string PackageContentFolder = "package";
         #endregion
 
         public static bool CreateNewRelease(VersionNumber versionNumber)

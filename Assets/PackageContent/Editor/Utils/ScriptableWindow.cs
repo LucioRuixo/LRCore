@@ -11,7 +11,7 @@ namespace LRCore
         public virtual string Title { get; }
 
         private ScriptableObject TargetObject { get; set; }
-        private UnityEditor.Editor CustomEditor { get; set; }
+        private Editor CustomEditor { get; set; }
 
         private Vector2 scrollPos;
 

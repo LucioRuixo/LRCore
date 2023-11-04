@@ -14,7 +14,7 @@ namespace LRCore.Packaging
 
         #region Structures
         [Serializable]
-        public struct AuthorInfo
+        public struct Author
         {
             [SerializeField] private string name;
             [JsonProperty("name")] public string Name => name;
@@ -24,6 +24,13 @@ namespace LRCore.Packaging
 
             [SerializeField] private string url;
             [JsonProperty("url")] public string URL => url;
+        }
+
+        [Serializable]
+        public struct Dependencies
+        {
+            [SerializeField] private string newtonsoftJson;
+            [JsonProperty("com.unity.nuget.newtonsoft-json")] public string NewtonsoftJson => newtonsoftJson;
         }
         #endregion
 
@@ -44,14 +51,14 @@ namespace LRCore.Packaging
 
 
         [Header("Optional properties")]
-        [SerializeField] private AuthorInfo author;
-        [JsonProperty("author")] public AuthorInfo Author => author;
+        [SerializeField] private Author author;
+        [JsonProperty("author")] public Author _Author => author;
 
         [SerializeField] private string changelogURL;
         [JsonProperty("changelogUrl")] public string ChangelogURL => changelogURL;
 
-        [SerializeField] private string[] dependencies;
-        [JsonProperty("dependencies")] public string[] Dependencies => dependencies;
+        [SerializeField] private Dependencies dependencies;
+        [JsonProperty("dependencies")] public Dependencies _Dependencies => dependencies;
 
         [SerializeField] private string documentationURL;
         [JsonProperty("documentationUrl")] public string DocumentationURL => documentationURL;
@@ -77,6 +84,6 @@ namespace LRCore.Packaging
         [SerializeField] private string unityRelease;
         [JsonProperty("unityRelease")] public string UnityRelease => unityRelease;
 
-        [JsonProperty("version")] public string Version { get; set; }
+        [JsonProperty("version")] public string Version => ReleaseHistory.LatestVersion;
     }
 }

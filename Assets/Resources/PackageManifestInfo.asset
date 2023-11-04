@@ -21,7 +21,8 @@ MonoBehaviour:
     email: lucioruixo@gmail.com
     url: https://github.com/LucioRuixo
   changelogURL: https://github.com/LucioRuixo/LRCore
-  dependencies: []
+  dependencies:
+    newtonsoft: 3.2.1
   documentationURL: https://github.com/LucioRuixo/LRCore
   hideInEditor: 0
   keywords: []

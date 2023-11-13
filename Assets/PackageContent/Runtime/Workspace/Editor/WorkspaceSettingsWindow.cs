@@ -5,15 +5,15 @@ namespace LRCore.Editor
 {
     using global::LRCore;
     using global::LRCore.Settings;
+    using Utils;
 
     public class WorkspaceSettingsWindow : ScriptableWindow
     {
         #region Constants
-        private const string MenuTitle = "Workspace Settings";
+        private const string Title = "Workspace Settings";
+        private const string MenuTitle = Title;
         private const string Shortcut_Open = "%#w";
         #endregion
-
-        public override string Title => MenuTitle;
 
         private static WorkspaceSettings workspaceSettings;
 
@@ -27,10 +27,9 @@ namespace LRCore.Editor
         new public static void Open(ScriptableObject scriptableObject)
         {
             WorkspaceSettingsWindow window = (WorkspaceSettingsWindow)GetWindow(typeof(WorkspaceSettingsWindow), false);
+
             if (!window) return;
 
-            // TODO: que el título de la ventana sea Title (ahora no funciona)
-            window.titleContent.text = window.Title;
             window.SetTargetObject(scriptableObject);
         }
 

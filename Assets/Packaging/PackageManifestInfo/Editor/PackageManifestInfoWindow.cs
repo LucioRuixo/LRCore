@@ -4,17 +4,19 @@ using UnityEngine;
 namespace LRCore.Editor.Packaging
 {
     using global::LRCore.Packaging;
+    using global::LRCore.Utils;
+    using global::LRCore.Utils.Extensions;
     using Utils;
-    using Utils.Extensions;
 
     public class PackageManifestInfoWindow : ScriptableWindow
     {
         #region Constants
-        private const string MenuTitle = "Package Manifest Info";
+        private const string Title = "Package Manifest Info";
+        private const string MenuTitle = Title;
         private const string Shortcut_Open = "%#i";
         #endregion
 
-        public override string Title => MenuTitle;
+        protected override bool AddToHierarchy => false;
 
         private bool releaseHistoryIsEmpty;
         private string version;
@@ -28,13 +30,11 @@ namespace LRCore.Editor.Packaging
 
         new public static void Open(ScriptableObject scriptableObject)
         {
-            PackageManifestInfoWindow window = (PackageManifestInfoWindow)GetWindow(typeof(PackageManifestInfoWindow), false);
+            PackageManifestInfoWindow window = GetWindow<PackageManifestInfoWindow>(Title);
+
             if (!window) return;
 
-            // TODO: que el título de la ventana sea Title (ahora no funciona)
-            window.titleContent.text = window.Title;
             window.SetTargetObject(scriptableObject);
-
             window.Refresh();
         }
 

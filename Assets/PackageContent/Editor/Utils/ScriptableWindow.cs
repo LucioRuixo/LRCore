@@ -2,14 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace LRCore
+namespace LRCore.Editor.Utils
 {
+    using SOs;
+
     public class ScriptableWindow : EditorWindow
     {
-        public virtual string Title { get; }
+        protected virtual bool AddToHierarchy => true;
 
         private ScriptableObject TargetObject { get; set; }
-        private Editor CustomEditor { get; set; }
+        private UnityEditor.Editor CustomEditor { get; set; }
 
         private Vector2 scrollPos;
 
@@ -17,16 +19,9 @@ namespace LRCore
 
         public static void Open(ScriptableObject scriptableObject)
         {
-            // ScriptableWindow window = CreateInstance(typeof(ScriptableWindow)) as ScriptableWindow;
-            // if(window == null) return;
-            // window.SetTargetObject(so);
-            // window.ShowUtility();
-
             ScriptableWindow window = (ScriptableWindow)GetWindow(typeof(ScriptableWindow), false);
             if (!window) return;
 
-            // TODO: que el título de la ventana sea Title (ahora no funciona)
-            window.titleContent.text = window.Title;
             window.SetTargetObject(scriptableObject);
         }
 
@@ -36,9 +31,12 @@ namespace LRCore
 
             if (CustomEditor)
             {
-                DrawObjectHierarchy();
+                if (AddToHierarchy)
+                {
+                    DrawObjectHierarchy();
 
-                EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+                    EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+                }
 
                 scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
                 CustomEditor.OnInspectorGUI();
@@ -65,8 +63,10 @@ namespace LRCore
         protected void SetTargetObject(ScriptableObject targetObject)
         {
             TargetObject = targetObject;
-            CustomEditor = Editor.CreateEditor(targetObject);
+            CustomEditor = UnityEditor.Editor.CreateEditor(targetObject);
             titleContent = new GUIContent(targetObject.name);
+
+            if (!AddToHierarchy) return;
 
             // Keep a record of the setting objects hierarchy
             int newTargetObjIndex = TargetObjects.IndexOf(targetObject);
@@ -83,7 +83,7 @@ namespace LRCore
         }
     }
 
-    [CustomPropertyDrawer(typeof(ScriptableObject), true)]
+    [CustomPropertyDrawer(typeof(CustomScriptableObject), true)]
     public class CustomScriptableObjectDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => 0.0f;

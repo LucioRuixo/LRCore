@@ -26,15 +26,13 @@ namespace LRCore.Utils.Extensions
         public abstract ExtTypes ExtType { get; }
         public abstract string Ext { get; }
 
-        public static Dictionary<ExtTypes, Extension> ValidExts { get; } = new();
-
-        static Extension()
+        public static Dictionary<ExtTypes, Extension> ValidExts { get; } = new Dictionary<ExtTypes, Extension>()
         {
-            ValidExts.Add(ExtTypes.Data, new Data());
-            ValidExts.Add(ExtTypes.JSON, new JSON());
-            ValidExts.Add(ExtTypes.Text, new Text());
-            ValidExts.Add(ExtTypes.XML, new XML());
-        }
+            { ExtTypes.Data, new Data() },
+            { ExtTypes.JSON, new JSON() },
+            { ExtTypes.Text, new Text() },
+            { ExtTypes.XML, new XML() }
+        };
 
         public bool HasExtension(string path) => path.EndsWith(Ext);
 
@@ -51,7 +49,9 @@ namespace LRCore.Utils.Extensions
             return ValidExts.Values.FirstOrDefault(extension => extension.Ext == extensionString).ExtType;
         }
 
+        #region Operators
         public static implicit operator string(Extension extension) => extension.Ext;
+        #endregion
     }
 
     public abstract class SerializableExtension : Extension

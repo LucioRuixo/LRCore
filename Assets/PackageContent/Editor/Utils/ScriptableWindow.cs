@@ -6,8 +6,6 @@ namespace LRCore
 {
     public class ScriptableWindow : EditorWindow
     {
-        // TODO: estudiar esta clase
-
         public virtual string Title { get; }
 
         private ScriptableObject TargetObject { get; set; }
@@ -67,7 +65,7 @@ namespace LRCore
         protected void SetTargetObject(ScriptableObject targetObject)
         {
             TargetObject = targetObject;
-            CustomEditor = UnityEditor.Editor.CreateEditor(targetObject);
+            CustomEditor = Editor.CreateEditor(targetObject);
             titleContent = new GUIContent(targetObject.name);
 
             // Keep a record of the setting objects hierarchy

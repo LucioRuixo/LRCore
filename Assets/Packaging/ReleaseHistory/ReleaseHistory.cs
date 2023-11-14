@@ -34,8 +34,8 @@ namespace LRCore.Packaging
 
         public static bool IsEmpty => History.Count == 0;
 
-        public static VersionNumber LatestVersion => History != null && !IsEmpty ? History.Last().Key : null;
-        public static Release LatestRelease => History != null && !IsEmpty ? History.Last().Value : null;
+        public static VersionNumber LatestVersion => History != null && !IsEmpty ? history.Last().Key : null;
+        public static Release LatestRelease => History != null && !IsEmpty ? history.Last().Value : null;
 
         public static bool AddNewRelease(VersionNumber versionNumber, Release release)
         {
@@ -44,7 +44,7 @@ namespace LRCore.Packaging
                 Logger.LogError(typeof(ReleaseHistory), "Could not add new release: version number must be higher than 0.0.0.");
                 return false;
             }
-            else if (!IsEmpty && versionNumber <= LatestVersion)
+            else if (history != null && history.Count > 0 && versionNumber <= history.Last().Key)
             {
                 Logger.LogError(typeof(ReleaseHistory), $"Could Can not add new release: version number {versionNumber} is not higher than last release's.");
                 return false;
@@ -62,13 +62,28 @@ namespace LRCore.Packaging
             SaveHistory();
         }
 
+        private static void UpdateHistory()
+        {
+            if (history == null || history.Count == 0) return;
+
+            List<VersionNumber> invalidVersions = new List<VersionNumber>();
+            foreach (VersionNumber version in history.Keys) if (!Directory.Exists(history[version].BuildPath)) invalidVersions.Add(version);
+            foreach (VersionNumber invalidVersion in invalidVersions) history.Remove(invalidVersion);
+
+            SaveHistory();
+        }
+
         private static void SaveHistory() => Serializer.Serialize(historyFilePath, history);
 
         private static void LoadHistory()
         {
             try
             {
-                if (File.Exists(historyFilePath)) history = Serializer.Deserialize<History>(historyFilePath);
+                if (File.Exists(historyFilePath))
+                {
+                    history = Serializer.Deserialize<History>(historyFilePath);
+                    UpdateHistory();
+                }
                 else
                 {
                     history = new();

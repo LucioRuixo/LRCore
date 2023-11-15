@@ -4,8 +4,6 @@ using UnityEngine;
 namespace LRCore.Editor.Packaging
 {
     using global::LRCore.Packaging;
-    using global::LRCore.Utils;
-    using global::LRCore.Utils.Extensions;
     using Utils;
 
     public class PackageManifestInfoWindow : ScriptableWindow
@@ -15,8 +13,6 @@ namespace LRCore.Editor.Packaging
         private const string MenuTitle = Title;
         private const string Shortcut_Open = "%#i";
         #endregion
-
-        protected override bool AddToHierarchy => false;
 
         private bool releaseHistoryIsEmpty;
         private string version;
@@ -36,21 +32,6 @@ namespace LRCore.Editor.Packaging
 
             window.SetTargetObject(scriptableObject);
             window.Refresh();
-        }
-
-        protected override void OnGUI()
-        {
-            base.OnGUI();
-
-            EditorGUILayout.Space();
-
-            if (GUILayout.Button($"Serialize manifest"))
-            {
-                PackageManifestInfo manifestAsset = (PackageManifestInfo)Resources.Load(PackageManifestInfo.AssetName);
-                string manifestPath = $"{Paths.packagesFolder}/{manifestAsset.PackageName}/{PackagingUtils.PackageManifestFileName}";
-
-                ((SerializableExtension)Extension.ValidExts[ExtTypes.JSON]).Serialize(manifestPath, manifestAsset);
-            }
         }
 
         private void Refresh()

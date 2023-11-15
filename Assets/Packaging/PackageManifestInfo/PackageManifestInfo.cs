@@ -85,5 +85,14 @@ namespace LRCore.Packaging
         [JsonProperty("unityRelease")] public string UnityRelease => unityRelease;
 
         [JsonProperty("version")] public string Version => ReleaseHistory.LatestVersion;
+
+        public static PackageManifestInfo Get()
+        {
+            PackageManifestInfo manifestAsset = (PackageManifestInfo)Resources.Load(AssetName);
+
+            if (!manifestAsset) Debug.LogError($"PACKAGE MANIFEST INFO | Could not load package manifest info from path \"{AssetName}\"");
+
+            return manifestAsset;
+        }
     }
 }

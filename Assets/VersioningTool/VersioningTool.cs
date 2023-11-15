@@ -3,6 +3,7 @@ using System.IO;
 namespace LRCore.Packaging
 {
     using Utils;
+    using Utils.Extensions;
 
     public class VersioningTool
     {
@@ -26,6 +27,8 @@ namespace LRCore.Packaging
 
                     if (ReleaseHistory.AddNewRelease(versionNumber, release))
                     {
+                        CreatePackageManifest(ReleaseHistory.LatestVersion);
+
                         Logger.Log(typeof(VersioningTool), $"New version {versionNumber} release successfully created in path \"{release.BuildPath}\"!");
                         return true;
                     }
@@ -59,6 +62,16 @@ namespace LRCore.Packaging
 
             string[] packageFiles = Directory.GetFiles(packageContentPath, "*", SearchOption.AllDirectories);
             foreach (string file in packageFiles) File.Copy(file, file.Replace(packageContentPath, buildContentPath), true);
+        }
+
+        private static void CreatePackageManifest(string latestVersion)
+        {
+            PackageManifestInfo packageManifestInfo = PackageManifestInfo.Get();
+
+            if (!packageManifestInfo) return;
+
+            string manifestPath = $"{Paths.buildsFolder}/v{latestVersion}/package/package.json";
+            ((SerializableExtension)Extension.ValidExts[ExtTypes.JSON]).Serialize(manifestPath, packageManifestInfo);
         }
     }
 }

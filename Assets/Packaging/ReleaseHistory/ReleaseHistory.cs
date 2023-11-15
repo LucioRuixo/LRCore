@@ -62,28 +62,13 @@ namespace LRCore.Packaging
             SaveHistory();
         }
 
-        private static void UpdateHistory()
-        {
-            if (history == null || history.Count == 0) return;
-
-            List<VersionNumber> invalidVersions = new List<VersionNumber>();
-            foreach (VersionNumber version in history.Keys) if (!Directory.Exists(history[version].BuildPath)) invalidVersions.Add(version);
-            foreach (VersionNumber invalidVersion in invalidVersions) history.Remove(invalidVersion);
-
-            SaveHistory();
-        }
-
         private static void SaveHistory() => Serializer.Serialize(historyFilePath, history);
 
         private static void LoadHistory()
         {
             try
             {
-                if (File.Exists(historyFilePath))
-                {
-                    history = Serializer.Deserialize<History>(historyFilePath);
-                    UpdateHistory();
-                }
+                if (File.Exists(historyFilePath)) history = Serializer.Deserialize<History>(historyFilePath);
                 else
                 {
                     history = new();

@@ -14,9 +14,6 @@ namespace LRCore.Editor.Packaging
         private const string Shortcut_Open = "%#i";
         #endregion
 
-        private bool releaseHistoryIsEmpty;
-        private string version;
-
         [MenuItem(LRCore.Signature + "/" + MenuTitle + " " + Shortcut_Open)]
         public static void Open()
         {
@@ -31,13 +28,6 @@ namespace LRCore.Editor.Packaging
             if (!window) return;
 
             window.SetTargetObject(scriptableObject);
-            window.Refresh();
-        }
-
-        private void Refresh()
-        {
-            releaseHistoryIsEmpty = ReleaseHistory.IsEmpty;
-            version = ReleaseHistory.LatestVersion;
         }
     }
 }

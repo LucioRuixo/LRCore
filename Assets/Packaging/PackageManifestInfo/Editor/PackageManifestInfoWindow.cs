@@ -11,8 +11,10 @@ namespace LRCore.Editor.Packaging
         #region Constants
         private const string Title = "Package Manifest Info";
         private const string MenuTitle = Title;
-        private const string Shortcut_Open = "%#i";
+        private const string Shortcut_Open = "#&i";
         #endregion
+
+        protected override bool AddToHierarchy => false;
 
         [MenuItem(LRCore.Signature + "/" + MenuTitle + " " + Shortcut_Open)]
         public static void Open()
